@@ -1,4 +1,9 @@
 # ReactJS Notes
+Some notes I took for learning ReactJS. I went through documentation and ran through a few tutorials to better understand ReactJS logic. Most of the resources I followed use ES6 and therefore required transpiling and setting up an environment through nodeJS - they are below:
+- [surviveJS: webpack + React](http://survivejs.com/)
+- [egghead: React Fundamentals](https://egghead.io/series/react-fundamentals)
+- [ES6 features](https://github.com/lukehoban/es6features)
+
 
 ### Developing with Webpack
 - --save-dev: used to save the package for development purposes (unit tests, minification).
@@ -27,4 +32,3 @@
     - Each child in an array/iterator should have a unique ‘key’ prop. For example, creating React components in an iteration, each component needs to have a unique key.
 
 ### ES6
-- https://github.com/lukehoban/es6features
