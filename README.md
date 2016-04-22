@@ -47,10 +47,10 @@ Some notes I took for learning ReactJS. I went through documentation and ran thr
 
 ### Conventions
 - Ordering
-    1. 'constructor()' function
+    1. `constructor()` function
     2. lifecycle hooks
-    3. 'render()'
-    4. methods used by 'render()'
-    5. use '\_' prefix for event handlers
+    3. `render()`
+    4. methods used by `render()`
+    5. use `_` prefix for event handlers
 
 ### ES6
