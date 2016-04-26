@@ -6,7 +6,8 @@ Some notes I took for learning ReactJS. I went through documentation and ran thr
 
 
 ### Developing with Webpack
-- --save-dev: used to save the package for development purposes (unit tests, minification).
+- refer to surviveJS' webpack section
+- --save-dev: used to save the package for development purposes in nodeJS (unit tests, minification)
 - --save: used to save the package required for the app to run
 
 ### Fundamental Topics
@@ -44,6 +45,10 @@ Some notes I took for learning ReactJS. I went through documentation and ran thr
     - **Stateful Component**: both props and state. Also called *state managers*. They are in charge of client-server communication (XHR, web sockets, etc.), processing data, and responding to user events. These sort of logistics should be encapsulated in a moderate number of Stateful Components, while all visualization and formatting logic should move downstream into as many Stateless Components as possible.
     - state is optional. B/c state increases complexity and reduces predictability, a Component without state is preferable. Even though you clearly can't do without state in an interactive app, avoid having too many Stateful Components
     - If a Component needs to alter one of its attribute at some point in time, that attribute should be part of its state, otherwise it should just be a prop for that Component.
+
+### Flux Architecture
+Flux allows us to separate data and app state from our views.
+![Flux](/flux.png)
 
 ### Conventions
 - Ordering
