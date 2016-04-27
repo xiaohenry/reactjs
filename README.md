@@ -46,6 +46,8 @@ Some notes I took for learning ReactJS. I went through documentation and ran thr
     - state is optional. B/c state increases complexity and reduces predictability, a Component without state is preferable. Even though you clearly can't do without state in an interactive app, avoid having too many Stateful Components
     - If a Component needs to alter one of its attribute at some point in time, that attribute should be part of its state, otherwise it should just be a prop for that Component.
 
+---
+
 ### Flux Architecture
 ![Flux](/flux.png)
 Flux allows us to separate data and app state from our views. Flux implements unidrectional flow in contrast to frameworks like Angular & Ember (two-directional). Two-directional has benefits, but it can be hard to deduce what's happening.
@@ -53,19 +55,22 @@ Flux allows us to separate data and app state from our views. Flux implements un
     - **Two-way binding** - view is updated when the state changes, and vice versa. View <> State
     - **Unidirectional** - View is a function of app state; when state changes, the view automatically re-renders itself, so the same state produces the same view. Mutation of data is done via actions, so view components subscribe to stores and automatically re-render themselves using the new data. Action -> Store -> View
 
-###### Actions and Stores
+##### Actions and Stores
 
-###### Dispatcher
-When an action is trigger, the dispatcher will get notified, and it will be able to deal w/ possible dependencies between stores. It may be that one action needs to happen before another.
+##### Dispatcher
+When an action is triggered, the dispatcher will get notified, and it will be able to deal w/ possible dependencies between stores. It may be that one action needs to happen before another.
 
 Once the dispatcher has dealt with an action, the stores listening to it get triggered, then it can update its internal state. After, the store will notify possible listeners of its new state.
 
-###### Flux Dataflow
+##### Flux Dataflow
 Usually the unidirectional process has a cyclical flow and doesn't necessarily end. It's the same idea, but with addition of a returning cycle.
 ![Flux](/flux2.png)
 
 ### Alt JS
 In Alt, you deal with **actions** and **stores**. The dispatcher is hidden, but you have access if needed.
+
+
+---
 
 ### Conventions
 - Ordering
