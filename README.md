@@ -5,12 +5,16 @@ Some notes I took for learning ReactJS. I went through documentation and ran thr
 - [ES6 features](https://github.com/lukehoban/es6features)
 
 
-### Developing with Webpack
+## Developing with Webpack & NodeJS
 - refer to surviveJS' webpack section
-- --save-dev: used to save the package for development purposes in nodeJS (unit tests, minification)
-- --save: used to save the package required for the app to run
+- `--save-dev`: used to save the package for development purposes in nodeJS (unit tests, minification)
+- `--save`: used to save the package required for the app to run
+- `import` statements import both Node modules and other JS component (files)
+- `export` statements allows a file (module) to be imported
+- `import`/`export` are ES6. By using Babel to render ES6 `import`/`export`, it converts them to CommonJS `require`/`module.exports` anyway
+- `require` are NodeJS
 
-### Fundamental Topics
+## Fundamental Topics
 - **JSX** - allows us to write HTML ish syntax which gets transformed to lightweight JS objects
 - **Virtual DOM** - JS representation of the actual DOM
 - **render method** - what we want our HTML template to look like
@@ -33,7 +37,7 @@ Some notes I took for learning ReactJS. I went through documentation and ran thr
     - **mixins** - contains an array of mixins to apply to components
     - **statics** - contain static props and methods for a component.
 
-### Concepts
+## Concepts
 - **Binding**
     - Often we want to bind a component’s function to reference “this” as in “this” component. this.update.bind(this) —> the update function of this component now uses the component as “this"
 - **Keys**
@@ -48,7 +52,7 @@ Some notes I took for learning ReactJS. I went through documentation and ran thr
 
 ---
 
-### Flux Architecture
+## Flux Architecture
 ![Flux](/flux.png)
 Flux allows us to separate data and app state from our views. Flux implements unidrectional flow in contrast to frameworks like Angular & Ember (two-directional). Two-directional has benefits, but it can be hard to deduce what's happening.
 - **Unidrectional vs Two-way binding**
@@ -56,6 +60,7 @@ Flux allows us to separate data and app state from our views. Flux implements un
     - **Unidirectional** - View is a function of app state; when state changes, the view automatically re-renders itself, so the same state produces the same view. Mutation of data is done via actions, so view components subscribe to stores and automatically re-render themselves using the new data. Action -> Store -> View
 
 #### Actions and Stores
+- A **store** is a single source of truth for a part of your app state.
 
 #### Dispatcher
 When an action is triggered, the dispatcher will get notified, and it will be able to deal w/ possible dependencies between stores. It may be that one action needs to happen before another.
@@ -66,13 +71,13 @@ Once the dispatcher has dealt with an action, the stores listening to it get tri
 Usually the unidirectional process has a cyclical flow and doesn't necessarily end. It's the same idea, but with addition of a returning cycle.
 ![Flux](/flux2.png)
 
-### Alt JS
+## Alt JS
 In Alt, you deal with **actions** and **stores**. The dispatcher is hidden, but you have access if needed.
 
 
 ---
 
-### Conventions
+## Conventions
 - Ordering
     1. `constructor()` function
     2. lifecycle hooks
@@ -80,4 +85,110 @@ In Alt, you deal with **actions** and **stores**. The dispatcher is hidden, but 
     4. methods used by `render()`
     5. use `_` prefix for event handlers
 
-### ES6
+## ES6
+
+#### Arrows
+Arrows are a function shorthand using the `=>` syntax. Unlike functions, arrows share the same lexical `this` as their surrounding code.
+```JavaScript
+// Expression bodies
+var odds = evens.map(v => v + 1);
+var nums = evens.map((v, i) => v + i);
+var pairs = evens.map(v => ({even: v, odd: v + 1}));
+
+// Statement bodies
+nums.forEach(v => {
+  if (v % 5 === 0)
+    fives.push(v);
+});
+
+// Implied returns
+var func = (x, y) => { x+y; };
+
+// Lexical this
+var bob = {
+  _name: "Bob",
+  _friends: [],
+  printFriends() {
+    this._friends.forEach(f =>
+      console.log(this._name + " knows " + f));
+  }
+}
+```
+
+#### Classes
+ES6 classes are a simple sugar over the prototype-based OO pattern. Having a single convenient declarative form makes class patterns easier to use, and encourages interoperability. Classes support prototype-based inheritance, super calls, instance and static methods and constructors.
+
+Some special methods provided by ES6 classes:
+    - `constructor(...)`
+    - `get prop`
+    - `set prop`
+    - `static func(...)` - static methods are called *without* instantiating their class (called on the *class* itself, not on an instance of it), and are **not** callable when it is instantiated. Static methods are used to create **utility functions** for an app.
+
+```JavaScript
+class SkinnedMesh extends THREE.Mesh {
+  constructor(geometry, materials) {
+    super(geometry, materials);
+
+    this.idMatrix = SkinnedMesh.defaultMatrix();
+    this.bones = [];
+    this.boneMatrices = [];
+    //...
+  }
+  update(camera) {
+    //...
+    super.update();
+  }
+  get boneCount() {
+    return this.bones.length;
+  }
+  set matrixType(matrixType) {
+    this.idMatrix = SkinnedMesh[matrixType]();
+  }
+  static defaultMatrix() {
+    return new THREE.Matrix4();
+  }
+}
+```
+
+#### Template Strings
+Syntactic sugar for constructing strings. Similar to string interpolation. Tags allow string construction to be customized.
+```JavaScript
+// Basic literal string creation
+`In JavaScript '\n' is a line-feed.`
+
+// Multiline strings
+`In JavaScript this is
+ not legal.`
+
+// String interpolation
+var name = "Bob", time = "today";
+`Hello ${name}, how are you ${time}?`
+
+// Construct an HTTP request prefix is used to interpret the replacements and construction
+POST`http://foo.org/bar?a=${a}&b=${b}
+     Content-Type: application/json
+     X-Credentials: ${credentials}
+     { "foo": ${foo},
+       "bar": ${bar}}`(myOnReadyStateChangeHandler);
+```
+
+In the above example, a function called POST looks like
+```JavaScript
+function POST (strings, ...values) {
+    // strings contains an array of string literals within the POST expression (http://foo..., Content-Type:, ...)
+    // values contains the processed substitution expressions, like the value of a, b, credentials, ...
+    console.log(strings[0]); // "http://foo.org/bar?a="
+    console.log(values[0]); // value of credentials
+}
+```
+
+#### Destructuring
+Destructuring allows binding using pattern matching.
+``` JavaScript
+var foo = ["one", "two", "three"];
+
+var [one, two, three] = foo;
+console.log(one); // "one"
+console.log(two); // "two"
+console.log(three); // "three"
+```
