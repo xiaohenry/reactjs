@@ -1,4 +1,4 @@
-# ReactJS Notes
+# ReactJS + ES6 Notes
 Some notes I took for learning ReactJS. I went through documentation and ran through a few tutorials to better understand ReactJS logic. Most of the resources I followed use ES6 and therefore required transpiling and setting up an environment through nodeJS. They are listed below:
 - [surviveJS: webpack + React](http://survivejs.com/)
 - [egghead: React Fundamentals](https://egghead.io/series/react-fundamentals)
@@ -119,6 +119,7 @@ var bob = {
 ES6 classes are a simple sugar over the prototype-based OO pattern. Having a single convenient declarative form makes class patterns easier to use, and encourages interoperability. Classes support prototype-based inheritance, super calls, instance and static methods and constructors.
 
 Some special methods provided by ES6 classes:
+
     - `constructor(...)`
     - `get prop`
     - `set prop`
@@ -193,10 +194,119 @@ console.log(two); // "two"
 console.log(three); // "three"
 
 // Below, a and b have default values in the case that their assignment is undefined.
-// In this case, b=7 is maintained because its assignment is undefined. 
+// In this case, b=7 is maintained because its assignment is undefined.
 var a, b;
 
 [a=5, b=7] = [1];
 console.log(a); // 1
 console.log(b); // 7
 ```
+
+#### Default + Rest + Spread
+```JavaScript
+function f(x, y=12) {
+    // y is 12 if no y argument, or if it's undefined
+    return x + y;
+}
+f(3) === 15
+```
+
+```JavaScript
+function f(x, ...y) {
+    // push all args after x into an array
+    return x * y.length;
+}
+f(3, 'hello', true) === 6
+```
+
+```JavaScript
+function f(x, y, z) {
+    return x + y + z;
+}
+// pass each elem of array as an argument
+f(...[1,2,3]) === 6  
+```
+
+#### Let + Const
+**Block-scoped** binding constructs. `let` is the new `var`. `const` is single-assignment.
+```JavaScript
+function f() {
+    let x;
+    {
+        // this is OK - block scoped x is not the same as the x above!!
+        const x = "sneaky";
+        // error, const can't be reassigned
+        x = "foo";
+    }
+    // error, already declared in block
+    let x = "inner";
+}
+```
+
+#### Iterators + For..Of
+The for..of operator iterates over items in collections, rather than properties of objects (like for..in).
+```JavaScript
+let iterable = [1, 2, 3];
+
+for (let value of iterable) {
+  console.log(value);
+}
+// 1
+// 2
+// 3
+
+let iterable = "boo";
+
+for (let value of iterable) {
+  console.log(value);
+}
+// "b"
+// "o"
+// "o"
+```
+
+#### Generators
+Look more into this...
+
+#### Modules
+```JavaScript
+// lib/math.js
+export function sum(x, y) {
+  return x + y;
+}
+export var pi = 3.141593;
+```
+
+```JavaScript
+// app.js
+import * as math from "lib/math";
+alert("2π = " + math.sum(math.pi, math.pi));
+```
+
+```JavaScript
+// otherApp.js
+import {sum, pi} from "lib/math";
+alert("2π = " + sum(pi, pi));
+```
+
+```JavaScript
+// lib/mathplusplus.js
+export * from "lib/math";
+export var e = 2.71828182846;
+export default function(x) {
+    return Math.log(x);
+}
+```
+
+```JavaScript
+// app.js
+// ln is the default function from within lib/mathplusplus
+// {pi, e} comes from both mathplusplus mathplusplus' export * from lib/math
+// so mathplusplus exports its own modules as well as those from lib/math
+import ln, {pi, e} from "lib/mathplusplus";
+alert("2π = " + ln(e)*pi*2);
+```
+
+#### Math + Number + String + Array + Object APIs
+
+#### Promises
