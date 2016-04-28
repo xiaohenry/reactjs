@@ -191,4 +191,12 @@ var [one, two, three] = foo;
 console.log(one); // "one"
 console.log(two); // "two"
 console.log(three); // "three"
+
+// Below, a and b have default values in the case that their assignment is undefined.
+// In this case, b=7 is maintained because its assignment is undefined. 
+var a, b;
+
+[a=5, b=7] = [1];
+console.log(a); // 1
+console.log(b); // 7
 ```
