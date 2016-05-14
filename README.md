@@ -19,12 +19,12 @@ Some notes I took for learning ReactJS. I went through documentation and ran thr
 - **Virtual DOM** - JS representation of the actual DOM
 - **render method** - what we want our HTML template to look like
 - **ReactDOM.render** - renders a React component to a DOM node (mounts)
-- **state** - internal data store (object) of a component
-- **props** - data which is passed to the child component from the parent component (<Example txt=“hello” />) —> “txt" is the child component’s prop
-- **propTypes** - allows you to control the presence/type of certain props
+- `state` - internal data store (object) of a component
+- `props` - data which is passed to the child component from the parent component (<Example txt=“hello” />) —> “txt" is the child component’s prop
+- `propTypes` - allows you to control the presence/type of certain props
     - Slider.propTypes = { min: React.PropTypes.number, max: React.PropTypes.number.isRequired, … }
-- **defaultProps** - default props on a component
-- **refs** - allow parent Components to refer to specific Child components in a way that would be inconvenient via typical React data-flow. For pros/cons for refs, refer to [documentation](https://facebook.github.io/react/docs/more-about-refs.html#summary)
+- `defaultProps` - default props on a component
+- `refs` - allow parent Components to refer to specific Child components in a way that would be inconvenient via typical React data-flow. For pros/cons for refs, refer to [documentation](https://facebook.github.io/react/docs/more-about-refs.html#summary)
 - **Component Lifecycle** -
     - **componentWillMount** - fired before component mounts. Invoked once before initial render (setting up a Firebase reference)
     - **componentDidMount** - fired after component mounts. Invoked once after initial render. You have access to the DOM here, so we could use this hook to wrap a jQuery plugin within a component.
@@ -39,7 +39,7 @@ Some notes I took for learning ReactJS. I went through documentation and ran thr
 
 ## Concepts
 - **Binding**
-    - Often we want to bind a component’s function to reference “this” as in “this” component. this.update.bind(this) —> the update function of this component now uses the component as “this"
+    - Often we want to bind a component’s function to reference “this” as in “this” component. this.update.bind(this) —> the update function of this component now uses the component as “this". This is important if we want to reference `props` inside of a components function --> `this.props.id` would be invalid inside of `update()` if we did not bind `this` in the `constructor`.
 - **Keys**
     - Each child in an array/iterator should have a unique ‘key’ prop. For example, creating React components in an iteration, each component needs to have a unique key.
 - **Props and State (Detailed)**
@@ -72,8 +72,19 @@ Usually the unidirectional process has a cyclical flow and doesn't necessarily e
 ![Flux](/flux2.png)
 
 ## Alt JS
-In Alt, you deal with **actions** and **stores**. The dispatcher is hidden, but you have access if needed.
+In Alt, you deal with **actions** and **stores**. The dispatcher is hidden, but you have access if needed. Instead of having events and data being manipulated within our components, we provide:
+- a set of actions that provide an API for manipulating data
+- a store for actual data manipulation (the data itself, and the functions that you can perform on it)
+- integrate the view to listen to the store, and trigger actions
 
+As we alter our `store` through `actions`, this leads to a cascade that causes our `App` state to update through `setState` when our `store` is modified. This in turn causes the component to `render()`. This is Flux's unidirectional flow in practice.
+
+#### What's the Point?
+- What if we had multiple components relying on the data? We can just consume `NoteStore` and display it however we want.
+- What if we had different types of Note lists? We can set up another store for managing these lists, and that store can refer to actual Notes by id.
+
+#### Concepts
+- `FinalStore` - built-in store that listens to all existing stores. Everytime some store changes, `FinalStore` knows about it - making it ideal for persistency.
 
 ---
 
@@ -334,4 +345,4 @@ Object.assign(Point, { origin: new Point(0,0) })
 ```
 
 #### Promises
-Promises are a library for asynchronous programming. Promises are a first class representation of a value that may be available in the future. 
+Promises are a library for asynchronous programming. Promises are a first class representation of a value that may be available in the future.
