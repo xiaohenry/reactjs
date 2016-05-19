@@ -1,5 +1,5 @@
 # ReactJS + ES6 Notes
-Some notes I took for learning ReactJS. I went through documentation and ran through a few tutorials to better understand ReactJS logic. Most of the resources I followed use ES6 and therefore required transpiling and setting up an environment through nodeJS. They are listed below:
+Some notes I took for learning ReactJS from going through docs and tutorials. Most of the resources I followed use ES6 and therefore required transpiling and setting up an environment through nodeJS. They are listed below:
 - [surviveJS: webpack + React](http://survivejs.com/)
 - [egghead: React Fundamentals](https://egghead.io/series/react-fundamentals)
 - [ES6 features](https://github.com/lukehoban/es6features)
@@ -70,6 +70,10 @@ Once the dispatcher has dealt with an action, the stores listening to it get tri
 #### Flux Dataflow
 Usually the unidirectional process has a cyclical flow and doesn't necessarily end. It's the same idea, but with addition of a returning cycle.
 ![Flux](/flux2.png)
+
+## Concepts
+- **Single Immutable State Tree**: State is maintained in a react state tree, which holds the entire state of an application at any point in time. We update this tree by triggering the state of a component, and triggering render. All the data and UI-state is contained in this tree.
+- **Changing the State Tree**: Component needs to dispatch an *action*.
 
 ## Alt JS
 In Alt, you deal with **actions** and **stores**. The dispatcher is hidden, but you have access if needed. Instead of having events and data being manipulated within our components, we provide:
