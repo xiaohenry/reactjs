@@ -49,6 +49,7 @@ Some notes I took for learning ReactJS from going through docs and tutorials. Mo
     - **Stateful Component**: both props and state. Also called *state managers*. They are in charge of client-server communication (XHR, web sockets, etc.), processing data, and responding to user events. These sort of logistics should be encapsulated in a moderate number of Stateful Components, while all visualization and formatting logic should move downstream into as many Stateless Components as possible.
     - state is optional. B/c state increases complexity and reduces predictability, a Component without state is preferable. Even though you clearly can't do without state in an interactive app, avoid having too many Stateful Components
     - If a Component needs to alter one of its attribute at some point in time, that attribute should be part of its state, otherwise it should just be a prop for that Component.
+    - An example of typical stateless components are wrapper and high-level composing components. For example, if you have a `Card` component, then a natural parent component (or 'owner') would be `Cards`. `Cards` simply holds data and passes them down to each individual `Card`; `Cards` would be a stateless component that 'owns' `Cards`. 
 
 ---
 
